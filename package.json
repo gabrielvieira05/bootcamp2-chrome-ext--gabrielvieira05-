@@ -1,0 +1,17 @@
+{
+  "name": "focustimerextension",
+  "version": "1.0.0",
+  "description": "Extensão Chrome MV3 com Playwright.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build-extension.mjs",
+    "test:e2e": "playwright test --reporter=list,html",
+    "test": "npm run build && npm run test:e2e"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "archiver": "^7.0.0"
+  }
+}
