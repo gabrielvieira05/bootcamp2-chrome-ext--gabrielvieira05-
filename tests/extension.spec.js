@@ -5,7 +5,7 @@ const dist = path.resolve(__dirname, '..', 'dist');
 
 test('popup carrega e exibe UI', async () => {
   const context = await chromium.launchPersistentContext('', {
-    headless: false,
+    headless: true,
     args: [
       `--disable-extensions-except=${dist}`,
       `--load-extension=${dist}`
