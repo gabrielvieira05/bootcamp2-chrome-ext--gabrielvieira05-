@@ -78,6 +78,6 @@ Extensão simples para Chrome que funciona como um timer de foco/pomodoro com co
 
 ## Créditos
 
-Desenvolvido por Seu Nome ou Usuário GitHub – Bootcamp II Professor Romes (2025)
+Desenvolvido por Gabriel Vieira Souza – Bootcamp II Professor Romes (2025)
 
 ***
