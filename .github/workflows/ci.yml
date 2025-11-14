@@ -7,22 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build-and-validate:
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-
-    - name: Install Playwright Lib
-      run: npm install -D @playwright/test
-
-    - name: Install Browsers
-      run: npx playwright install --with-deps chromium
 
     - name: Start Docker Containers
       run: docker compose up -d --build
@@ -30,7 +21,14 @@ jobs:
     - name: Wait for Server
       run: sleep 15
 
-    - name: Check PWA is Online
+    - name: Verify PWA is Online
       run: |
-        curl -v http://localhost:8080 || exit 1
-        echo "PWA is running successfully!"
+        echo "Tentando conectar em localhost:8080..."
+        curl -v --fail http://localhost:8080
+        echo "✅ SUCESSO: O PWA está rodando e acessível!"
+
+    - name: Verify API is Online
+      run: |
+        echo "Tentando conectar na API..."
+        curl -v --fail http://localhost:3000
+        echo "✅ SUCESSO: A API está rodando!"
