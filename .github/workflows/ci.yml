@@ -18,27 +18,25 @@ jobs:
       with:
         node-version: '20'
 
-    # 1. Instala o Playwright (ferramenta de teste)
+    - name: Install Dependencies
+      run: npm install
+
     - name: Install Playwright
       run: npx playwright install --with-deps chromium
 
-    # 2. Sobe os Containers (Web + API)
     - name: Start Docker Containers
       run: docker compose up -d --build
 
-    # 3. Espera 10 segundos para garantir que o servidor subiu
     - name: Wait for Server
-      run: sleep 10
+      run: sleep 15
 
-    # 4. Roda um teste simples para ver se o site está no ar
     - name: Check PWA is Online
       run: |
-        curl -f http://localhost:8080 || exit 1
+        curl -v http://localhost:8080 || exit 1
         echo "PWA is running successfully!"
 
-    # 5. (Opcional) Gera um artefato para provar que funcionou
     - name: Upload Logs
-      if: always()
+      if: failure()
       uses: actions/upload-artifact@v4
       with:
         name: docker-logs
