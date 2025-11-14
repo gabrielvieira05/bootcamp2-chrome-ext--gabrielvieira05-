@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Timer Pro</title>
+    
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1><span class="emoji">🚀</span> <span class="highlight">Focus</span>Timer</h1>
+        </header>
+        
+        <section class="timer-card">
+            <div id="timer" class="timer-large">25:00:00</div>
+        </section>
+
+        <section class="set-time-card">
+            <div class="input-group">
+                <input type="number" id="hoursInput" min="0" max="99" placeholder="00">
+                <span class="unit">h</span>
+            </div>
+            
+            <div class="input-group">
+                <input type="number" id="minutesInput" min="0" max="59" value="25">
+                <span class="unit">m</span>
+            </div>
+            
+            <div class="input-group">
+                <input type="number" id="secondsInput" min="0" max="59" placeholder="00">
+                <span class="unit">s</span>
+            </div>
+            
+            <button id="setBtn" class="btn btn-define">Definir</button>
+        </section>
+
+        <div class="buttons">
+            <button id="startBtn" class="btn btn-start">
+                <span>▶</span> Iniciar
+            </button>
+            <button id="pauseBtn" class="btn btn-pause">
+                <span>❚❚</span> Pausa
+            </button>
+            <button id="resetBtn" class="btn btn-reset">
+                <span>■</span> Reset
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
