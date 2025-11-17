@@ -1,83 +1,95 @@
-***
+# 🚀 FocusTimer PWA (Monorepo)
 
-# Focus Timer - Extensão do Google Chrome (Manifest V3)
+> Versão PWA (Progressive Web App) do FocusTimer, evoluída de uma extensão do Chrome para uma aplicação web completa com Backend e Frontend containerizados.
 
-Extensão simples para Chrome que funciona como um timer de foco/pomodoro com controle de horas, minutos e segundos, notificações e interface intuitiva.
+![FocusTimer PWA](https://img.shields.io/badge/Status-Concluído-brightgreen)
+![Docker](https://img.shields.io/badge/Container-Docker-blue)
+![PWA](https://img.shields.io/badge/PWA-Ready-purple)
 
-***
+## 📋 Sobre o Projeto
 
-## Funcionalidades principais
+O **FocusTimer PWA** é uma ferramenta de produtividade estilo Pomodoro. Diferente da versão anterior (extensão), esta versão opera como um aplicativo web independente, capaz de funcionar offline e persistir dados de histórico em um backend próprio.
 
-- Timer configurável com horas, minutos e segundos
-- Iniciar, pausar e resetar contagem facilmente
-- Notificações ao final do timer
-- Interface simples, elegante e pensada para produtividade
-- Testes E2E automatizados (Playwright)
-- Empacotamento automatizado (`dist/extension.zip`)
+### ✨ Funcionalidades Principais
+* **Frontend Moderno:** Interface refeita com tema Dark/Glassmorphism e totalmente responsiva.
+* **PWA (Progressive Web App):** Instalável no Desktop/Mobile e funcionamento Offline (Service Worker v3).
+* **Backend Próprio:** API REST em Node.js/Express para salvar histórico das sessões.
+* **Timer Configurável:** Defina horas, minutos e segundos personalizados.
+* **Infraestrutura como Código:** Orquestração completa via Docker Compose (Nginx + Node.js).
 
-***
+---
 
-## Instalação e uso (Modo local)
+## 🏗 Estrutura de Pastas (Monorepo)
 
-1. Clone ou baixe este repositório  
-2. Execute `npm install` para instalar dependências  
-3. Rode `npm run build` para empacotar a extensão na pasta `dist/`  
-4. No Chrome, acesse `chrome://extensions`  
-5. Ative o "Modo do desenvolvedor" (canto superior direito)  
-6. Clique em **Load unpacked** e selecione a pasta `dist/`  
-7. Clique no ícone da extensão para abrir o popup  
-8. Configure o timer e comece a usar
+O projeto foi reestruturado para separar claramente as responsabilidades:
 
-***
+```bash
+.
+├── apps/
+│   ├── api/         # Backend (Node.js + Express) - Roda na porta 3000
+│   └── web/         # Frontend (HTML/CSS/JS + PWA) - Roda na porta 8080
+├── .github/         # Pipelines de CI/CD (GitHub Actions)
+├── docker-compose.yml # Orquestrador dos containers
+└── README.md        # Documentação
+````
 
-## Testes automatizados
+-----
 
-- Para rodar os testes E2E do Playwright:
-  ```bash
-  npm run test:e2e
-  ```
-- Para visualizar o relatório HTML dos testes:
-  ```bash
-  npx playwright show-report
-  ```
-- O relatório será aberto em seu navegador (`playwright-report/index.html`).
+## 🚀 Instalação e Uso (Rodando com Docker)
 
-***
+Esta é a forma recomendada de executar a aplicação completa (Frontend + API).
 
-## Empacotamento automático
+### Pré-requisitos
 
-- O script de build (`npm run build`) copia todos os arquivos necessários e gera `dist/extension.zip` pronto para envio/publicação.
-- Use o ZIP em "Releases" do GitHub para entrega ou deploy.
+  * Docker e Docker Compose instalados.
 
-***
+### Passo a Passo
 
-## Estrutura de pastas
+1.  Clone este repositório:
 
-```
-├── dist/                  # extensão empacotada (.zip) e arquivos para modo desenvolvedor
-├── icons/                 # ícones da extensão (16, 32, 48, 128px)
-├── src/                   # código-fonte principal (popup, background, content scripts)
-├── scripts/               # script de build automatizado (Node.js)
-├── tests/                 # testes Playwright (config e specs)
-├── playwright-report/     # relatório dos testes
-├── docs/                  # materiais para GitHub Pages se houver
-├── .github/workflows/     # workflow de CI do GitHub Actions
-├── package.json           # dependências, scripts e metadados
-├── manifest.json          # descrição da extensão
-├── LICENSE, README.md     # documentação e licença
-```
+    ```bash
+    git clone [https://github.com/gabrielvieira05/bootcamp2-chrome-ext--gabrielvieira05-.git](https://github.com/gabrielvieira05/bootcamp2-chrome-ext--gabrielvieira05-.git)
+    ```
 
-***
+2.  Entre na pasta do projeto e suba os containers:
 
-## CI/CD e automação
+    ```bash
+    docker compose up --build
+    ```
 
-- O repositório possui automação GitHub Actions para build, testes e artefato do ZIP.
-- Pipeline testado localmente e validado em CI/CD.
+3.  Acesse a aplicação no navegador:
 
-***
+      * **Frontend (Timer):** [http://localhost:8080](https://www.google.com/search?q=http://localhost:8080)
+      * **API (Histórico):** [http://localhost:3000/sessions](https://www.google.com/search?q=http://localhost:3000/sessions)
 
-## Créditos
+> **Nota:** Ao finalizar um ciclo de foco, o Frontend envia automaticamente os dados para a API. Você pode verificar o registro acessando o link da API acima.
 
-Desenvolvido por Gabriel Vieira Souza – Bootcamp II Professor Romes (2025)
+-----
 
-***
+## 🧪 Testes e CI/CD
+
+O projeto conta com uma pipeline de Integração Contínua (CI) no **GitHub Actions** que executa automaticamente a cada push na branch `main`.
+
+**O que é validado:**
+
+1.  **Build dos Containers:** Garante que os Dockerfiles da `api` e `web` estão corretos.
+2.  **Smoke Testing:** Verifica se os serviços sobem e respondem com status `HTTP 200 OK` (garantindo que a aplicação está acessível).
+3.  **Dependências:** Instalação limpa das dependências do projeto.
+
+Para ver os logs de execução, acesse a aba [Actions](https://github.com/gabrielvieira05/bootcamp2-chrome-ext--gabrielvieira05-/actions) deste repositório.
+
+-----
+
+## 🛠️ Tecnologias Utilizadas
+
+  * **Frontend:** HTML5, CSS3 (Variáveis CSS), Vanilla JS.
+  * **Backend:** Node.js, Express.
+  * **DevOps:** Docker, Docker Compose, Nginx (Reverse Proxy), GitHub Actions.
+  * **PWA:** Service Workers, Web App Manifest.
+
+-----
+
+## 👨‍💻 Créditos
+
+Desenvolvido por **Gabriel Vieira Souza** e **Caio da Silva Diniz**.
+*Bootcamp II - Professor Romes (2025)*
